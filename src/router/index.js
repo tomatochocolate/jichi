@@ -6,40 +6,97 @@ import change from '@/components/change/change'
 import home from '@/components/home/home'
 import distake from '@/components/distake/distake'
 import { basePort } from 'portfinder'
+import buy from '@/components/buy/buy'
+import order from '@/components/order/order'
+import help from '@/components/help/help'
+import feedback from '@/components/feedback/feedback'
+import card from '@/components/card/card'
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   routes: [
-    { path: '/', redirect: { name: 'login' } },
+    { path: '/',
+     redirect: { name: 'home' } 
+      // name:'index',
+      // component:login
+    },
     {
       path: '/home',
       name: 'home',
       component: home,
       meta: {
-        requireAuth: true  
+        isLogin: true
       },
     },
     {
       path: '/login',
       name: 'login',
-      component: login
+      component: login,
+      meta: {
+        isLogin: false
+      },
     },
     {
       path: '/register',
       name: 'register',
       component: register,
-      
+      meta: {
+        isLogin: false
+      },
     },
     {
       path: '/change',
       name: 'change',
-      component: change
+      component: change,
+      meta: {
+        isLogin: true
+      },
     },
     {
-      path:'*',
-      name:'distake',
+      path: '/buy',
+      name: 'buy',
+      component: buy,
+      meta: {
+        isLogin: true
+      },
+    },
+    {
+      path: '/help',
+      name: 'help',
+      component: help,
+      meta: {
+        isLogin: true
+      },
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: order,
+      meta: {
+        isLogin: true
+      },
+    },
+    {
+      path: '/card',
+      name: 'card',
+      component: card,
+      meta: {
+        isLogin: true
+      },
+    },
+    {
+      path: '/feedback',
+      name: 'feedback',
+      component: feedback,
+      meta: {
+        isLogin: true
+      },
+    },
+    {
+      path: '*',
+      name: 'distake',
       component: distake,
       // redirect: { name: 'login' },
       // meta: {

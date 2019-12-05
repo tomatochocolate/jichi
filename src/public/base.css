@@ -35,7 +35,7 @@ input:focus{outline:0}
 .safebox .from li a{display: inline-block;float: right;}
 .safebox .btn{display:block;width: 256px;margin: 0 auto;margin-top: 24px;border-radius: 20px;font-size: 18px; height: 40px;line-height: 40px;padding: 0 20px;  }
 .safebox .other{margin-top: 24px;}
-.safebox .other li{display: inline-block;width: 50%}
+.safebox .other li{display: inline-block;width: 49%}
 .safebox .other li:nth-child(2){text-align: right}
 .safebox .info{text-align: center;margin-top: 24px;}
 .safebox .info span{color:#FF022E;}
