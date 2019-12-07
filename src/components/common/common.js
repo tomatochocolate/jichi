@@ -22,10 +22,13 @@ export default {
   // 发送请求
   sengAjax: function sengAjax(api, pars) {
     $.ajax({
-      url: "https://jcb.jzstudio.com.cn/api/qt" + api,
+      url: "http://jcb.jichibang2019.com" + api,
       cache: false,
       type: "post",
       data: pars,
+      beforeSend: function(request) {
+        request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+      },
       success: function (json) {
         if (json.code == 0) {
           if (api == "/login") {
