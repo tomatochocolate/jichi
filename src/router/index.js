@@ -6,11 +6,11 @@ import change from '@/components/change/change'
 import home from '@/components/home/home'
 import distake from '@/components/distake/distake'
 import { basePort } from 'portfinder'
-import buy from '@/components/buy/buy'
+import buy from '@/components/buy/buy.vue'
 import order from '@/components/order/order'
-import help from '@/components/help/help'
+import help from '@/components/help/help.vue'
 import feedback from '@/components/feedback/feedback'
-import card from '@/components/card/card'
+import card from '@/components/card/card.vue'
 
 Vue.use(Router)
 
@@ -18,9 +18,9 @@ export default new Router({
   mode: 'history',
   routes: [
     { path: '/',
-     redirect: { name: 'home' } 
-      // name:'index',
-      // component:login
+    //  redirect: { name: 'index' } 
+      name:'index',
+      component:login
     },
     {
       path: '/home',
@@ -51,7 +51,7 @@ export default new Router({
       name: 'change',
       component: change,
       meta: {
-        isLogin: true
+        isLogin: false
       },
     },
     {

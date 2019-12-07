@@ -87,3 +87,13 @@ input:focus{outline:0}
 .help ul li.show .title .icon{width: 0;height: 0; border: 6px solid transparent;border-bottom-color: #0078FF ;float: right;margin-top: 0px;}
 .help ul li .info{display: none;font-size: 14px;line-height:24px}
 .help ul li.show .info{display: block;padding: 12px 0}
+
+.home{width: 320px; margin: 0 auto;margin-top: 100px;background: #eee}
+.home ul{width: 92%;margin: 0 auto;padding: 16px 0}
+.home ul li{ padding: 12px; margin-top: 16px; box-shadow: 0px 1px 2px 0px #999;background: #fff;border-radius: 2px} 
+.home ul li .title{height: 20px;line-height: 20px;display: block;}
+.home ul li .title span{color: #2b2b2b}
+.home ul li .title .icon{width: 0;height: 0; border: 6px solid transparent;border-top-color: #0078FF ;float: right;margin-top: 6px;}
+.home ul li.show .title .icon{width: 0;height: 0; border: 6px solid transparent;border-bottom-color: #0078FF ;float: right;margin-top: 0px;}
+.home ul li .info{display: none;font-size: 14px;line-height:24px}
+.home ul li.show .info{display: block;padding: 12px 0}

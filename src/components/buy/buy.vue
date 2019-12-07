@@ -9,7 +9,7 @@
           <span class="buy">
             <a href="#" goodid="101" class="btn">
               <i class="icon">
-                <img src="style/buy.png" alt />
+                <img src="../../assets/buy.png" alt />
               </i>
               <span>购买</span>
             </a>
@@ -28,7 +28,7 @@
           <span class="buy">
             <a href="#" goodid="102" class="btn">
               <i class="icon">
-                <img src="style/buy.png" alt />
+                <img src="../../assets/buy.png" alt />
               </i>
               <span>购买</span>
             </a>
@@ -47,7 +47,7 @@
           <span class="buy">
             <a href="#" goodid="103" class="btn">
               <i class="icon">
-                <img src="style/buy.png" alt />
+                <img src="../../assets/buy.png" alt />
               </i>
               <span>购买</span>
             </a>
@@ -66,7 +66,7 @@
           <span class="buy">
             <a href="#" goodid="104" class="btn">
               <i class="icon">
-                <img src="style/buy.png" alt />
+                <img src="../../assets/buy.png" alt />
               </i>
               <span>购买</span>
             </a>
@@ -119,7 +119,7 @@
 </template>
 
 
-<script type="text/javascript">
+<script >
 export default {
   name: "buy",
   data() {
@@ -212,7 +212,7 @@ export default {
 // 		str += '<li>';
 // 		str += '<div class="main">';
 // 		str += '<span class="days">'+_title+'</span><span class="price">￥'+_price+'</span><span class="buy">';
-// 		str += '<a href="#" goodId="'+_id+'" class="btn"><i class="icon"><img src="style/buy.png" alt=""></i><span>购买</span></a>';
+// 		str += '<a href="#" goodId="'+_id+'" class="btn"><i class="icon"><img src="../../assets/buy.png" alt=""></i><span>购买</span></a>';
 // 		str += '</span>';
 // 		str += '</div>';
 // 		str += '<div class="info">';
@@ -280,3 +280,9 @@ export default {
 // 	});
 // }
 </script>
+
+<style scoped>
+    .product ul li .main .price{
+        width: 25%;
+    }
+</style>

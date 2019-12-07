@@ -43,14 +43,15 @@
     <div class="info">
       新用户免费体验
       <span>30分钟</span>
-      <a href="javascript:show('.regbox');">马上注册&gt;</a>
+      <a @click="goRegister">马上注册&gt;</a>
     </div>
   </div>
 </template>
 <script>
-import Vuex from 'vuex'
-import axios from 'axios'
-import store from '../../store/store'
+import Vuex from "vuex";
+import axios from "axios";
+import store from "../../store/store";
+import common from "../common/common";
 
 export default {
   name: "login",
@@ -68,37 +69,65 @@ export default {
       this.$router.push("/change");
     },
     getData() {
-        localStorage.setItem("Flag", 'isLogin');
-		// this.$store.dispatch("userLogin", true);
-    //   this.$axios
-    //     .post("/xxx/login", { user: name, password: pwd })
-    //     .then(data => {
-    //       //登录失败,先不讨论
-    //       if (data.data.status != 200) {
-    //         //iViewUi的友好提示
-    //         this.$Message.error(data.data.message);
-    //         //登录成功
-    //       } else {
-    //         //设置Vuex登录标志为true，默认userLogin为false
-    //         this.$store.dispatch("userLogin", true);
-    //         //Vuex在用户刷新的时候userLogin会回到默认值false，所以我们需要用到HTML5储存
-    //         //我们设置一个名为Flag，值为isLogin的字段，作用是如果Flag有值且为isLogin的时候，证明用户已经登录了。
-    //         localStorage.setItem("Flag", "isLogin");
-    //         //iViewUi的友好提示
-    //         this.$Message.success(data.data.message);
-    //         //登录成功后跳转到指定页面
-    //         this.$router.push("/home");
-    //       }
-    //     });
+    //   localStorage.setItem("Flag", 'isLogin');
+      // this.$store.dispatch("userLogin", true);
+      //   this.$axios
+      //     .post("/xxx/login", { user: name, password: pwd })
+      //     .then(data => {
+      //       //登录失败,先不讨论
+      //       if (data.data.status != 200) {
+      //         //iViewUi的友好提示
+      //         this.$Message.error(data.data.message);
+      //         //登录成功
+      //       } else {
+      //         //设置Vuex登录标志为true，默认userLogin为false
+      //         this.$store.dispatch("userLogin", true);
+      //         //Vuex在用户刷新的时候userLogin会回到默认值false，所以我们需要用到HTML5储存
+      //         //我们设置一个名为Flag，值为isLogin的字段，作用是如果Flag有值且为isLogin的时候，证明用户已经登录了。
+      //         localStorage.setItem("Flag", "isLogin");
+      //         //iViewUi的友好提示
+      //         this.$Message.success(data.data.message);
+      //         //登录成功后跳转到指定页面
+      //         this.$router.push("/home");
+      //       }
+      //     });
       this.$router.push("/home");
+      var phone = $(".loginbox .phone").val();
+      if (phone.length <= 0) {
+        alert("登录时，手机号码，请填写");
+        return false;
+      }
+      if (!/^1[3456789]\d{9}$/.test(phone)) {
+        alert("登录时，手机号码，有误，请重新填写");
+        return false;
+      }
+      var password = $(".loginbox .password").val();
+      if (password.length <= 0) {
+        alert("登录时，登录密码，请填写");
+        return false;
+      }
+      common.sengAjax("/login", {
+        channel: common.getChannelId(),
+        phone: phone,
+        password: password
+      });
     }
+  },
+  created: function() {
+	let getFlag = localStorage.getItem("Flag");
+	if(getFlag === "isLogin"){
+  
+      //设置vuex登录状态为已登录
+	  store.state.isLogin = true
+	  this.$router.push("/home");
+	  }
   }
 };
 </script>
 
 <style scoped>
-.icon{
-    margin-right: 6px!important
+.icon {
+  margin-right: 6px !important;
 }
 </style>
 

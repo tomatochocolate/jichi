@@ -3,7 +3,6 @@
     <div class="content">出错了404
       <button @click="goLogin">返回登录</button>
     </div>
-    
     </div>
     
 </template>
