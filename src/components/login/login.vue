@@ -69,7 +69,7 @@ export default {
       this.$router.push("/change");
     },
     getData() {
-    //   localStorage.setItem("Flag", 'isLogin');
+      // localStorage.setItem("Flag", 'isLogin');
       // this.$store.dispatch("userLogin", true);
       //   this.$axios
       //     .post("/xxx/login", { user: name, password: pwd })

@@ -2,7 +2,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': {
-                target: '10.3.141.52',
+                target: 'http://jcb.jichibang2019.com/',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': '/'

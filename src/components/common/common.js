@@ -22,14 +22,19 @@ export default {
   // 发送请求
   sengAjax: function sengAjax(api, pars) {
     $.ajax({
-      url: "http://jcb.jichibang2019.com" + api,
+      url: "http://jcb.jichibang2019.com/api/qt" + api,
       cache: false,
       type: "post",
       data: pars,
       beforeSend: function(request) {
         request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+        request.setRequestHeader("Access-Control-Allow-Origin", "*");
+        request.setRequestHeader("Access-Control-Allow-Credentials", "true");
+        request.setRequestHeader( "Access-Control-Allow-Headers", "x-requested-with,content-type")
       },
       success: function (json) {
+        console.log(1);
+        
         if (json.code == 0) {
           if (api == "/login") {
             setCookie(
@@ -66,6 +71,7 @@ export default {
       },
       complete: function () {
         //无论成功还是失败，都会调用此函数
+        
       }
     });
   },
