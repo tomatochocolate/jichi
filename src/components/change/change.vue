@@ -108,9 +108,12 @@ export default {
 			alert("修改密码时，短信验证码，请填写");
 			return false;
     }
-    console.log(this);
     
-    common.sengAjax('/forgotPassword',{channel:common.getChannelId(),phone:phone,password:password,captcha:captcha});
+    common.sengAjax('/forgotPassword',{channel:common.getChannelId(),phone:phone,password:password,captcha:captcha},()=>{
+      this.$router.push("/login")
+      // console.log(this);
+      
+    });
     
 	}
   }

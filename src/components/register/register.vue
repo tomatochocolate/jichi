@@ -119,6 +119,8 @@ export default {
         phone: phone,
         password: password,
         captcha: captcha
+      },()=>{
+        this.$router.push("/login");
       });
     }
   },

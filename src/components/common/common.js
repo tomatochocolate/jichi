@@ -19,10 +19,10 @@ export default {
   },
 
   // 发送请求
-  sengAjax: function sengAjax(api, pars) {
+  sengAjax: function sengAjax(api, pars,success) {
     const that = this
     $.ajax({
-      url: 'http://192.168.0.160:9988/api/qt' + api,
+      url: 'http://192.168.0.160:8080/api/qt' + api,
       cache: false,
       method: 'post',
       data: pars,
@@ -35,7 +35,8 @@ export default {
           if (api == '/login') {
             common.setCookie('token', (typeof json.data == 'string' ? eval('(' + json.data + ')') : json.data).token);
             localStorage.setItem("Flag", 'isLogin');
-            // this.$router.push("/home");
+            success()
+
             var _ua = navigator.userAgent;
             if (_ua.indexOf('Android') > -1 || _ua.indexOf('Adr') > -1) { //安卓终端
               window.console.log('$appcmdex_vpn_loginResponse:' + json.data);
@@ -45,19 +46,14 @@ export default {
               // });
             }
           }
-          if(api =='/forgotPassword'){
-            console.log(this);
-            console.log(window);
-            console.log(that.$router);
+          if(api =='/forgotPassword' || api =='/register'){
+            success()
             
-            
-            
-            // window.$router.push('/login')
           }
           // alert(json.msg);
           return;
         }
-        alert(json.msg);
+        // alert(json); 
       },
       error: function (jqXHR, textStatus, errorThrown) {
         alert('发生错误，HTTP代码是' + (jqXHR ? jqXHR.status : '未知'));
@@ -89,7 +85,7 @@ export default {
 
   // 取得token
   getToken: function getToken() {
-    return getCookie('token');
+    return common.getCookie('token');
   },
 
   // 取得Cookie值

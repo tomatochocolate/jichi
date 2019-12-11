@@ -44,13 +44,13 @@
     <Divider />
     <div class="nod">
       <span style="margin-left:15px">选择节点</span>
-      <span class="fr" style="margin-right: 15px">
+      <span class="fr" style="margin-right: 15px" @click="rush">
         <Icon type="md-refresh" />刷新
       </span>
     </div>
     <ul>
       <li class="nod-li" v-for="(item,i) in nod.listdata" v-bind:key=i>
-        <span>日本，日本</span>
+        <span style="text-align:center">{{item.site}}</span>
         <span><Badge status="success" />30ms</span>
         <span >已连接</span>
       </li>
@@ -67,7 +67,9 @@ import common from "../common/common";
 export default {
   name: "home",
   created:function(){
-     
+      common.sengAjax("/userinfo", {
+        token: common.getToken()
+      });
   }
   ,
   data() {
@@ -87,13 +89,20 @@ export default {
     };
   },
   methods: {
+    rush(){
+        common.sengAjax("/ssr_nodes", {
+        token: common.getToken()
+      });
+      // console.log(123);
+      
+    },
     change(status) {
       if (status == true) {
         status = "已连接";
       } else {
         status = "未连接";
       }
-      this.$Message.info("连接状态：" + status);
+      // this.$Message.info("连接状态：" + status);
     },
     outLogin() {
       
@@ -234,7 +243,7 @@ a:hover {
 }
 .buy{
   color: #2d8cf0;
-  float: right;
+  float: left;
   cursor:pointer;
 }
 .buy:hover{

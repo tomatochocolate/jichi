@@ -145,8 +145,9 @@ export default {
         channel: common.getChannelId(),
         phone: phone,
         password: password
+      },()=>{
+        this.$router.push("/home");
       });
-      this.$router.push("/home");
       
     }
   },

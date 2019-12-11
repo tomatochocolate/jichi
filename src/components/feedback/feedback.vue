@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="feedback">
     <table>
       <tr>
-        <td>
+        <td colspan="2" align="center">
           <h2>意见反馈</h2>
         </td>
       </tr>
@@ -11,7 +11,7 @@
           <label>联系方式</label>
         </td>
         <td>
-          <i-Input v-model="value3" size="small" placeholder="small size"  />
+          <i-Input v-model="value3" size="small" placeholder="请填写联系方式"  />
         </td>
       </tr>
       <tr>
