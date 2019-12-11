@@ -18,7 +18,8 @@ export default new Router({
   mode: 'history',
   routes: [
     { path: '/',
-    //  redirect: { name: 'index' } 
+      // redirect: { name: 'home' } ,
+      redirect:"/login",
       name:'index',
       component:login
     },

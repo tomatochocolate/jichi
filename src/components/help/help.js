@@ -248,7 +248,7 @@
 // 	if(cval!=null) document.cookie = (key + "="+cval+";expires="+exp.toGMTString());
 // }
 
-//start 定期检查支付结果
+// start 定期检查支付结果
 // function checkPayResult() {
 // 	var orderNo = getCookie('orderNo');
 // 	if(!orderNo||orderNo.length<=0){

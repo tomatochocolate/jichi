@@ -52,6 +52,7 @@ import Vuex from "vuex";
 import axios from "axios";
 import store from "../../store/store";
 import common from "../common/common";
+import { resolve, async } from 'q';
 
 export default {
   name: "login",
@@ -91,7 +92,7 @@ export default {
       //         this.$router.push("/home");
       //       }
       //     });
-      this.$router.push("/home");
+      // this.$router.push("/home");
       var phone = $(".loginbox .phone").val();
       if (phone.length <= 0) {
         alert("登录时，手机号码，请填写");
@@ -106,11 +107,47 @@ export default {
         alert("登录时，登录密码，请填写");
         return false;
       }
+      //  axios({
+      //   url: "http://192.168.0.160:9988/api/qt/login", //在线跨域请求
+      //   method: "post", //默认是get请求
+      //   headers: {
+      //     //设置请求头
+      //     // "Access-Control-Allow-Origin": "*",
+      //     "Content-Type": "application/x-www-form-urlencoded",
+      //     // "Access-Control-Allow-Credentials": "true",
+      //     // "Access-Control-Allow-Headers": "x-requested-with,content-type"
+      //   },
+      //   data: {
+      //     //？search后面的值写在params中
+      //   channel: common.getChannelId(),
+      //   phone: phone,
+      //   password: password
+      //   }
+      // })
+      //   .then(function(val) {
+      //     console.log(val); // axios会对我们请求来的结果进行再一次的封装（ 让安全性提高 ）
+      //   })
+      //   .catch(function(err) {
+      //     console.log(err);
+      //   });
+
+      // new Promise((reslove,reject)=>{
+      //   common.sengAjax("/login", {
+      //   channel: common.getChannelId(),
+      //   phone: phone,
+      //   password: password
+      // }).then(()=>{
+      //     this.$router.push("/home");
+      // })
+      // })
+    
       common.sengAjax("/login", {
         channel: common.getChannelId(),
         phone: phone,
         password: password
       });
+      this.$router.push("/home");
+      
     }
   },
   created: function() {

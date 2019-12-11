@@ -42,6 +42,7 @@
 
 
 <script>
+import "../../public/rem"
 export default {
   data() {
     return {

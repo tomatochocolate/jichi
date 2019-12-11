@@ -107,8 +107,11 @@ export default {
 		if(captcha.length<=0){
 			alert("修改密码时，短信验证码，请填写");
 			return false;
-		}
-		sengAjax('/forgotPassword',{channel:getChannelId(),phone:phone,password:password,captcha:captcha});
+    }
+    console.log(this);
+    
+    common.sengAjax('/forgotPassword',{channel:common.getChannelId(),phone:phone,password:password,captcha:captcha});
+    
 	}
   }
 };

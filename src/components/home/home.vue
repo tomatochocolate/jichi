@@ -15,7 +15,7 @@
                 <MenuItem name="1-3" to="/help">使用帮助</MenuItem>
                 <MenuItem name="1-4" to="/feedback">意见反馈</MenuItem>
                 <MenuItem name="1-5" to="/card">卡密充值</MenuItem>
-                <a name="1-6" @click.native="outLogin" class="ivu-menu-item">退出登录</a>
+                <a name="1-6" @click="outLogin" class="ivu-menu-item">退出登录</a>
               </Submenu>
             </Menu>
           </template>
@@ -66,6 +66,10 @@ import common from "../common/common";
 
 export default {
   name: "home",
+  created:function(){
+     
+  }
+  ,
   data() {
     return {
       phone: "13538143602",
@@ -92,29 +96,40 @@ export default {
       this.$Message.info("连接状态：" + status);
     },
     outLogin() {
-      Axios({
-        url: "http://localhost:8080/register", //在线跨域请求
-        method: "post", //默认是get请求
-        headers: {
-          //设置请求头
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Access-Control-Allow-Credentials": "true",
-          "Access-Control-Allow-Headers": "x-requested-with,content-type"
-        },
-        data: {
-          //？search后面的值写在params中
-          channel: "GW",
-          phone: "13538143602",
-          password: "28552599"
-        }
-      })
-        .then(function(val) {
-          console.log(val); // axios会对我们请求来的结果进行再一次的封装（ 让安全性提高 ）
-        })
-        .catch(function(err) {
-          console.log(err);
-        });
+      
+      localStorage.removeItem("Flag")
+      this.$router.push("./login")
+      common.delCookie("token")
+      // Axios({
+      //   url: "http://192.168.0.161:9988/api/qt/login", //在线跨域请求
+      //   method: "post", //默认是get请求
+      //   transformRequest: [function (data) {
+      //           let ret = ''
+      //           for (let it in data) {
+      //             ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      //           }
+      //           return ret
+      //         }],
+      //   headers: {
+      //     //设置请求头
+      //     // "Access-Control-Allow-Origin": "*",
+      //     "Content-Type": "application/x-www-form-urlencoded",
+      //     // "Access-Control-Allow-Credentials": "true",
+      //     // "Access-Control-Allow-Headers": "x-requested-with,content-type"
+      //   },
+      //   data: {
+      //     //？search后面的值写在params中
+      //     channel: "GW",
+      //     phone: "13538143602",
+      //     password: "28552599"
+      //   }
+      // })
+      //   .then(function(val) {
+      //     console.log(val); // axios会对我们请求来的结果进行再一次的封装（ 让安全性提高 ）
+      //   })
+      //   .catch(function(err) {
+      //     console.log(err);
+      //   });
     }
   }
 };

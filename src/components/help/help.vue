@@ -50,22 +50,7 @@ export default {
     goLogin() {
       this.$router.push("/login");
     },
-    showinfo() {
-      //   if (
-      //     $(e)
-      //       .parent()
-      //       .hasClass("show")
-      //   ) {
-      //     $(e)
-      //       .parent()
-      //       .removeClass("show");
-      //   } else {
-      //     $(e)
-      //       .parent()
-      //       .addClass("show");
-      //   }
-      console.log();
-    }
+    
   }
 };
 </script>
