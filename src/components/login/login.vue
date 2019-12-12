@@ -146,6 +146,7 @@ export default {
         phone: phone,
         password: password
       },()=>{
+        alert("登录成功")
         this.$router.push("/home");
       });
       

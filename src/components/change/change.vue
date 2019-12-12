@@ -110,6 +110,7 @@ export default {
     }
     
     common.sengAjax('/forgotPassword',{channel:common.getChannelId(),phone:phone,password:password,captcha:captcha},()=>{
+      alert("修改密码成功")
       this.$router.push("/login")
       // console.log(this);
       

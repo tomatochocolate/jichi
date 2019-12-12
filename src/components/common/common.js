@@ -20,7 +20,6 @@ export default {
 
   // 发送请求
   sengAjax: function sengAjax(api, pars,success) {
-    const that = this
     $.ajax({
       url: 'http://192.168.0.160:8080/api/qt' + api,
       cache: false,
@@ -53,7 +52,9 @@ export default {
           // alert(json.msg);
           return;
         }
-        // alert(json); 
+        if(api != '/userinfo'){
+          alert(json.msg); 
+        }
       },
       error: function (jqXHR, textStatus, errorThrown) {
         alert('发生错误，HTTP代码是' + (jqXHR ? jqXHR.status : '未知'));
@@ -108,6 +109,28 @@ export default {
     exp.setTime(exp.getTime() - 1);
     var cval = common.getCookie(key);
     if (cval != null) document.cookie = (key + "=" + cval + ";expires=" + exp.toGMTString());
-  }
+  },
+
+  tokenAjax: function tokenAjax(api, pars,success) {
+    var token = common.getToken();
+    $.ajax({
+      url: 'http://192.168.0.160:8080/api/qt' + api,
+      cache: false,
+      method: 'post',
+      data: pars,
+      beforeSend(request) {
+        request.setRequestHeader("token", token);
+      },
+      success: function (json) {
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        alert('发生错误，HTTP代码是' + (jqXHR ? jqXHR.status : '未知'));
+      },
+      complete: function () {//无论成功还是失败，都会调用此函数
+      }
+    });
+  },
+
+
 }
 

@@ -120,6 +120,7 @@ export default {
         password: password,
         captcha: captcha
       },()=>{
+        alert("注册成功，跳转到登录页")
         this.$router.push("/login");
       });
     }

@@ -20,7 +20,7 @@
             </Menu>
           </template>
 
-          <span class="cont" v-if="switch1">
+          <span class="cont" v-if="switch1" @change="change">
             <Badge color="green" text="已连接" />
           </span>
           <span class="cont" v-else>
@@ -31,7 +31,7 @@
         <p>当前套餐：{{nodstatus}}</p>
         <p>
           到期时间:2020-01-01 14:38:33
-          <span class="buy">续费</span>
+          <span class="buy" @click="gobuy">续费</span>
         </p>
       </div>
     </div>
@@ -48,11 +48,11 @@
         <Icon type="md-refresh" />刷新
       </span>
     </div>
-    <ul>
+    <ul class="nList">
       <li class="nod-li" v-for="(item,i) in nod.listdata" v-bind:key=i>
         <span style="text-align:center">{{item.site}}</span>
         <span><Badge status="success" />30ms</span>
-        <span >已连接</span>
+        <span >{{item.status}}</span>
       </li>
     </ul>
   </div>
@@ -67,9 +67,7 @@ import common from "../common/common";
 export default {
   name: "home",
   created:function(){
-      common.sengAjax("/userinfo", {
-        token: common.getToken()
-      });
+      common.tokenAjax("/userinfo");
   }
   ,
   data() {
@@ -90,19 +88,26 @@ export default {
   },
   methods: {
     rush(){
-        common.sengAjax("/ssr_nodes", {
-        token: common.getToken()
-      });
-      // console.log(123);
-      
+      common.tokenAjax("/ssr_nodes");
+    },
+    gobuy(){
+        this.$router.push('/buy')
     },
     change(status) {
-      if (status == true) {
-        status = "已连接";
-      } else {
-        status = "未连接";
-      }
+      // if (status == true) {
+      //   status = "已连接";
+      // } else {
+      //   status = "未连接";
+      // }
       // this.$Message.info("连接状态：" + status);
+      if(status == false){
+        $(".nList").attr("style","display: none")
+      }else{
+        $(".nList").attr("style","display: block")
+      }
+  
+     
+      
     },
     outLogin() {
       
