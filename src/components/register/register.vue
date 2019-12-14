@@ -24,6 +24,10 @@
         <input type="password" class="password" placeholder="请输入密码" autocomplete="off" />
       </li>
       <li>
+        <img src alt class="verifyCodeImg" @click="toCodeImg"/>
+        <input type="text" placeholder="请输入验证码" class="CodeImg"/>
+      </li>
+      <li>
         <i class="icon">
           <img src="../../assets/checkcode.png" alt />
         </i>
@@ -54,7 +58,9 @@ import common from "../common/common.js";
 export default {
   name: "register",
   data() {
-    return {};
+    return {
+        uuid : "",
+    };
   },
   methods: {
     goLogin() {
@@ -62,10 +68,14 @@ export default {
     },
     goChange() {
       this.$router.push("/change");
+      console.log(this);
+      
     },
     toRandom() {
       //注册发送验证码
+      var result = $(".CodeImg").val();
       var phone = $(".regbox .phone").val();
+      var uuid = this.uuid      
       if (phone.length <= 0) {
         alert("注册发送验证码时，手机号码，请填写");
         return false;
@@ -78,12 +88,18 @@ export default {
         alert("注册发送验证码时，手机号码，有误，请重新填写");
         return false;
       }
+      if (result.length<= 0){
+          alert("请输入图形验证")
+          return false;
+      }
       $(".regbox .checkcodebtn").addClass("disable");
-      common.getRandomCode(".regbox .checkcodebtn", 60);
+      common.getRandomCode(".regbox .checkcodebtn", 30);
       common.sengAjax("/sms", {
         channel: common.getChannelId(),
         phone: phone,
-        type: "register"
+        type: "register",
+        result: result,
+        uuid: uuid
       });
     },
     toRegister() {
@@ -114,23 +130,78 @@ export default {
         alert("注册时，短信验证码，请填写");
         return false;
       }
-      common.sengAjax("/register", {
-        channel: common.getChannelId(),
-        phone: phone,
-        password: password,
-        captcha: captcha
-      },()=>{
-        alert("注册成功，跳转到登录页")
-        this.$router.push("/login");
-      });
+      common.sengAjax(
+        "/register",
+        {
+          channel: common.getChannelId(),
+          phone: phone,
+          password: password,
+          captcha: captcha
+        },
+        () => {
+          alert("注册成功，跳转到登录页");
+          this.$router.push("/login");
+        }
+      );
+    },
+    toCodeImg(){
+      console.log(123);
+       function getUuid() {
+      var date = new Date();
+      var newUuid =
+        "" +
+        date.getDate() +
+        date.getHours() +
+        date.getMinutes() +
+        date.getSeconds() +
+        date.getMilliseconds();
+      return newUuid;
+    }
+    var uuid = getUuid();
+    console.log(uuid);
+    $(".verifyCodeImg").attr(
+      "src",
+      "http://192.168.0.160:9988/api/qt/getVerifyCode?uuid=" +
+        uuid +
+        "&timestamp=" +
+        new Date().getTime()
+    );
     }
   },
-  created: function() {}
+  created: function() {},
+  mounted: function() {
+    function getUuid() {
+      var date = new Date();
+      var newUuid =
+        "" +
+        date.getDate() +
+        date.getHours() +
+        date.getMinutes() +
+        date.getSeconds() +
+        date.getMilliseconds();
+      return newUuid;
+    }
+    var uuid = getUuid();
+    this.uuid = uuid
+    console.log(uuid);
+    $(".verifyCodeImg").attr(
+      "src",
+      "http://192.168.0.160:9988/api/qt/getVerifyCode?uuid=" +
+        uuid +
+        "&timestamp=" +
+        new Date().getTime()
+    );
+  }
 };
 </script>
 
 <style scoped>
 .safebox .from li .checkcode {
   width: 124px;
+}
+.CodeImg{
+  width: 100px;
+  margin-left: 20px;
+  border: 1px solid #999;
 }
 </style>

@@ -18,6 +18,10 @@
         />
       </li>
       <li>
+        <img src alt class="verifyCodeImg" @click="toCodeImg" />
+        <input type="text" placeholder="请输入验证码" class="CodeImg" />
+      </li>
+      <li>
         <i class="icon">
           <img src="../../assets/checkcode.png" alt />
         </i>
@@ -59,6 +63,8 @@ export default {
       this.$router.push("/login");
     },
     toRandom() {
+      var result = $(".CodeImg").val();
+      var uuid = this.uuid;
       var phone = $(".chagebox .phone").val();
       if (phone.length <= 0) {
         alert("修改密码发送验证码时，手机号码，请填写");
@@ -72,51 +78,110 @@ export default {
         alert("注册发送验证码时，手机号码，有误，请重新填写");
         return false;
       }
+      if (result.length <= 0) {
+        alert("请输入图形验证");
+        return false;
+      }
       $(".chagebox .checkcodebtn").addClass("disable");
-      common.getRandomCode(".chagebox .checkcodebtn", 60);
+      common.getRandomCode(".chagebox .checkcodebtn", 30);
       common.sengAjax("/sms", {
         channel: common.getChannelId(),
         phone: phone,
-        type: "forgotPassword"
+        type: "forgotPassword",
+        result: result,
+        uuid: uuid
       });
-	},
-	toChange(){
-		var phone=$(".chagebox .phone").val();
-		if(phone.length<=0){
-			alert("修改密码时，手机号码，请填写");
-			return false;
-		}
-		if(!(/^1[3456789]\d{9}$/.test(phone))){
-			alert("修改密码时，手机号码有误，请重新填写");
-			return false;
-		}
-		if(phone=='13800138000'){
-			alert("修改密码时，手机号码，有误，请重新填写");
-			return false;
-		}
-		var password = $(".chagebox .password").val();
-		if(password.length<=0){
-			alert("修改密码时，登录密码，请填写");
-			return false;
-		}
-		if(password.length<6){
-			alert("修改密码时，登录密码小于6位，请重新填写");
-			return false;
-		}
-		var captcha = $(".chagebox .checkcode").val();
-		if(captcha.length<=0){
-			alert("修改密码时，短信验证码，请填写");
-			return false;
+    },
+    toChange() {
+      var phone = $(".chagebox .phone").val();
+      if (phone.length <= 0) {
+        alert("修改密码时，手机号码，请填写");
+        return false;
+      }
+      if (!/^1[3456789]\d{9}$/.test(phone)) {
+        alert("修改密码时，手机号码有误，请重新填写");
+        return false;
+      }
+      if (phone == "13800138000") {
+        alert("修改密码时，手机号码，有误，请重新填写");
+        return false;
+      }
+      var password = $(".chagebox .password").val();
+      if (password.length <= 0) {
+        alert("修改密码时，登录密码，请填写");
+        return false;
+      }
+      if (password.length < 6) {
+        alert("修改密码时，登录密码小于6位，请重新填写");
+        return false;
+      }
+      var captcha = $(".chagebox .checkcode").val();
+      if (captcha.length <= 0) {
+        alert("修改密码时，短信验证码，请填写");
+        return false;
+      }
+
+      common.sengAjax(
+        "/forgotPassword",
+        {
+          channel: common.getChannelId(),
+          phone: phone,
+          password: password,
+          captcha: captcha
+        },
+        () => {
+          alert("修改密码成功");
+          this.$router.push("/login");
+          // console.log(this);
+        }
+      );
+    },
+    toCodeImg() {
+      console.log(123);
+      function getUuid() {
+        var date = new Date();
+        var newUuid =
+          "" +
+          date.getDate() +
+          date.getHours() +
+          date.getMinutes() +
+          date.getSeconds() +
+          date.getMilliseconds();
+        return newUuid;
+      }
+      var uuid = getUuid();
+      console.log(uuid);
+      $(".verifyCodeImg").attr(
+        "src",
+        "http://192.168.0.160:9988/api/qt/getVerifyCode?uuid=" +
+          uuid +
+          "&timestamp=" +
+          new Date().getTime()
+      );
     }
-    
-    common.sengAjax('/forgotPassword',{channel:common.getChannelId(),phone:phone,password:password,captcha:captcha},()=>{
-      alert("修改密码成功")
-      this.$router.push("/login")
-      // console.log(this);
-      
-    });
-    
-	}
+  },
+  mounted: function() {
+    function getUuid() {
+      var date = new Date();
+      var newUuid =
+        "" +
+        date.getDate() +
+        date.getHours() +
+        date.getMinutes() +
+        date.getSeconds() +
+        date.getMilliseconds();
+      return newUuid;
+    }
+    var uuid = getUuid();
+    this.uuid = uuid;
+    console.log(uuid);
+    $(".verifyCodeImg").attr(
+      "src",
+      "http://192.168.0.160:9988/api/qt/getVerifyCode?uuid=" +
+        uuid +
+        "&timestamp=" +
+        new Date().getTime()
+    );
   }
 };
 </script>
@@ -124,5 +189,10 @@ export default {
 <style scoped>
 .safebox .from li .checkcode {
   width: 124px;
+}
+.CodeImg {
+  width: 100px;
+  margin-left: 20px;
+  border: 1px solid #999;
 }
 </style>

@@ -11,7 +11,7 @@
           <label>联系方式</label>
         </td>
         <td>
-          <i-Input v-model="value3" size="small" placeholder="请填写联系方式"  />
+          <i-Input v-model="value3" size="small" placeholder="请填写联系方式" />
         </td>
       </tr>
       <tr>
@@ -33,7 +33,7 @@
       <tr>
         <td></td>
         <td>
-          <button>提交反馈</button>
+          <button @click="goFeedback">提交反馈</button>
         </td>
       </tr>
     </table>
@@ -42,7 +42,7 @@
 
 
 <script>
-import "../../public/rem"
+import "../../public/rem";
 export default {
   data() {
     return {
@@ -50,19 +50,65 @@ export default {
       value17: "",
       value3: ""
     };
+  },
+  created: function(){
+    
+  },
+  mounted: function() {
+    function isHide(flag) {
+      // if (flag == false) {
+      //   $(".feedback table").attr("style", "display:none");
+      // }
+    }
+
+    function IsPC() {
+      var userAgentInfo = navigator.userAgent;
+      var Agents = [
+        "Android",
+        "iPhone",
+        "SymbianOS",
+        "Windows Phone",
+        "iPad",
+        "iPod"
+      ];
+      var flag = true;
+
+      for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+          flag = false;
+          break;
+        }
+      }
+
+      return isHide(flag);
+    }
+    IsPC();
+  },
+  methods:{
+    goFeedback(){
+      if($(".ivu-input-wrapper input").val()==""){
+        alert("请输入联系方式")
+      }else if($(".fmore .ivu-input").val()==""){
+        alert("请输入反馈内容")
+      }else{
+        alert("发送成功")
+        this.$router.push("/home")
+      }
+        
+    }
   }
 };
 </script>
 
 <style scoped>
 table {
-  margin:50px auto;
+  margin: 50px auto;
 }
-h2{
-    text-align: center
+h2 {
+  text-align: center;
 }
-.ivu-input{
-    min-height: 100px;
+.ivu-input {
+  min-height: 100px;
 }
 </style>>
 

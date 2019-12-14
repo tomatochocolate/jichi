@@ -7,11 +7,13 @@ export default {
     if (time === 0) {
       time = t;
       $(".checkcodebtn").removeClass("disable");
+      $(".checkcodebtn").removeAttr("disabled");
       $(e).text("发送验证码");
       return;
     } else {
       time--;
       $(e).text("验证码(" + time + "s)");
+      $(".checkcodebtn").attr("disabled", "disabled");
     }
     setTimeout(function () {
       getRandomCode(e, time);
@@ -21,7 +23,7 @@ export default {
   // 发送请求
   sengAjax: function sengAjax(api, pars,success) {
     $.ajax({
-      url: 'http://192.168.0.160:8080/api/qt' + api,
+      url: 'http://192.168.0.160:9988/api/qt' + api,
       cache: false,
       method: 'post',
       data: pars,
@@ -114,7 +116,7 @@ export default {
   tokenAjax: function tokenAjax(api, pars,success) {
     var token = common.getToken();
     $.ajax({
-      url: 'http://192.168.0.160:8080/api/qt' + api,
+      url: 'http://192.168.0.160:9988/api/qt' + api,
       cache: false,
       method: 'post',
       data: pars,

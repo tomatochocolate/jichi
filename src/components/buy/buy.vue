@@ -260,7 +260,7 @@ export default {
       $("#goods").html('请先&nbsp;&nbsp;<a href="login.html">登录</a>');
     } else {
       $.ajax({
-        url: "http://192.168.0.160:8080/api/qt/goods",
+        url: "http://192.168.0.160:9988/api/qt/goods",
         cache: false,
         type: "post",
         beforeSend: function(xhr) {
@@ -294,43 +294,6 @@ export default {
     }
 
     function setGoodsList(list) {
-      // var str = "";
-      // for (var i = 0; i < list.length; i++) {
-      //   var _id = list[i].id;
-      //   var _price = list[i].price;
-      //   var _priceDay = list[i].priceDay;
-      //   var _title = list[i].title;
-      //   var _priceShow = list[i].priceShow;
-      //   var _priceSave = list[i].priceSave;
-      //   //alert('_id='+_id+'\n'+'_price='+_price+'\n'+'_priceDay='+_priceDay+'\n'+'_title='+_title+'\n'+'_priceShow='+_priceShow+'\n'+'_priceSave='+_priceSave+'\n');
-      //   str += "<li>";
-      //   str += '<div class="main">';
-      //   str +=
-      //     '<span class="days">' +
-      //     _title +
-      //     '</span><span class="price">￥' +
-      //     _price +
-      //     '</span><span class="buy">';
-      //   str +=
-      //     '<a href="#" goodId="' +
-      //     _id +
-      //     '" class="btn"><i class="icon"><img src="../../assets/buy.png" alt=""></i><span>购买</span></a>';
-      //   str += "</span>";
-      //   str += "</div>";
-      //   str += '<div class="info">';
-      //   str +=
-      //     '<span class="oldprice">原价' +
-      //     _priceShow +
-      //     '元&nbsp;&nbsp;</span><span class="save">' +
-      //     (_priceSave > 0 ? "立省" + _priceSave + "元" : "") +
-      //     '</span><span class="average">￥' +
-      //     (_priceDay + "").substring(0, 8) +
-      //     "/天</span>";
-      //   str += "</div>";
-      //   str += "</li>";
-      // }
-      // $("#goods").html(str);
-
       $(".product .btn").click(function() {
         selectGoodId = $(this).attr("goodId"); //设置当前选择的产品套餐
         $(".buylist").addClass("show"); //显示选择支付方式
@@ -357,7 +320,7 @@ export default {
       //alert('selectGoodId='+selectGoodId+'\npayChannel='+payChannel+'\ntoken='+token);
       $("#payload").show();
       $.ajax({
-        url: "http://192.168.0.160:8080/api/qt/pay",
+        url: "http://192.168.0.160:9988/api/qt/pay",
         cache: false,
         type: "post",
         data: { goodsId: selectGoodId, payChannel: payChannel },
@@ -396,6 +359,58 @@ export default {
         }
       });
     }
+
+    function checkPayResult() {
+      var orderNo = common.getCookie("orderNo");
+      if (!orderNo || orderNo.length <= 0) {
+        clearCheckPayResult();
+        return;
+      }
+      $.ajax({
+        url: "http://192.168.0.160:9988/api/qt/" + orderNo,
+        cache: false,
+        type: "post",
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader("token", token);
+        },
+        success: function(json) {
+          if (json.code == 0) {
+            clearCheckPayResult();
+            delCookie("orderNo");
+            var _ua = navigator.userAgent;
+            if (_ua.indexOf("Android") > -1 || _ua.indexOf("Adr") > -1) {
+              //安卓终端
+              window.console.log(
+                '$appcmdex_vpn_vpnMessageUpdate:{"code": 0,"msg": "请求成功","data": ""}'
+              );
+            } else {
+              external.AppCmd(
+                external.GetSID(window),
+                "vpn",
+                "vpnMessageUpdate",
+                '{"code": 0,"msg": "请求成功","data": ""}',
+                "",
+                function(code, data) {
+                  console.info(code, data);
+                }
+              );
+            }
+            return;
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          //alert('发生错误，HTTP代码是' + (jqXHR ? jqXHR.status : '未知'));
+        },
+        complete: function() {
+          //无论成功还是失败，都会调用此函数
+        }
+      });
+    }
+    var _checkPayResult = window.setInterval(checkPayResult, 5000);
+    function clearCheckPayResult() {
+      if (_checkPayResult) window.clearInterval(_checkPayResult);
+    }
+
   }
 };
 </script>
