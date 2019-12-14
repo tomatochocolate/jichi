@@ -24,8 +24,8 @@
         <input type="password" class="password" placeholder="请输入密码" autocomplete="off" />
       </li>
       <li>
-        <img src alt class="verifyCodeImg" @click="toCodeImg"/>
-        <input type="text" placeholder="请输入验证码" class="CodeImg"/>
+        <img src alt class="verifyCodeImg" @click="toCodeImg" />
+        <input type="text" placeholder="请输入验证码" class="CodeImg" />
       </li>
       <li>
         <i class="icon">
@@ -59,7 +59,7 @@ export default {
   name: "register",
   data() {
     return {
-        uuid : "",
+      uuid: ""
     };
   },
   methods: {
@@ -69,13 +69,12 @@ export default {
     goChange() {
       this.$router.push("/change");
       console.log(this);
-      
     },
     toRandom() {
       //注册发送验证码
       var result = $(".CodeImg").val();
       var phone = $(".regbox .phone").val();
-      var uuid = this.uuid      
+      var uuid = this.uuid;
       if (phone.length <= 0) {
         alert("注册发送验证码时，手机号码，请填写");
         return false;
@@ -88,9 +87,9 @@ export default {
         alert("注册发送验证码时，手机号码，有误，请重新填写");
         return false;
       }
-      if (result.length<= 0){
-          alert("请输入图形验证")
-          return false;
+      if (result.length <= 0) {
+        alert("请输入图形验证");
+        return false;
       }
       $(".regbox .checkcodebtn").addClass("disable");
       common.getRandomCode(".regbox .checkcodebtn", 30);
@@ -144,28 +143,28 @@ export default {
         }
       );
     },
-    toCodeImg(){
+    toCodeImg() {
       console.log(123);
-       function getUuid() {
-      var date = new Date();
-      var newUuid =
-        "" +
-        date.getDate() +
-        date.getHours() +
-        date.getMinutes() +
-        date.getSeconds() +
-        date.getMilliseconds();
-      return newUuid;
-    }
-    var uuid = getUuid();
-    console.log(uuid);
-    $(".verifyCodeImg").attr(
-      "src",
-      "http://192.168.0.160:9988/api/qt/getVerifyCode?uuid=" +
-        uuid +
-        "&timestamp=" +
-        new Date().getTime()
-    );
+      function getUuid() {
+        var date = new Date();
+        var newUuid =
+          "" +
+          date.getDate() +
+          date.getHours() +
+          date.getMinutes() +
+          date.getSeconds() +
+          date.getMilliseconds();
+        return newUuid;
+      }
+      var uuid = getUuid();
+      console.log(uuid);
+      $(".verifyCodeImg").attr(
+        "src",
+        "http://192.168.0.160:9988/api/qt/getVerifyCode?uuid=" +
+          uuid +
+          "&timestamp=" +
+          new Date().getTime()
+      );
     }
   },
   created: function() {},
@@ -182,7 +181,7 @@ export default {
       return newUuid;
     }
     var uuid = getUuid();
-    this.uuid = uuid
+    this.uuid = uuid;
     console.log(uuid);
     $(".verifyCodeImg").attr(
       "src",
@@ -199,7 +198,7 @@ export default {
 .safebox .from li .checkcode {
   width: 124px;
 }
-.CodeImg{
+.CodeImg {
   width: 100px;
   margin-left: 20px;
   border: 1px solid #999;
